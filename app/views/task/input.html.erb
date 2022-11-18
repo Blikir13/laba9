@@ -1,8 +1,8 @@
 <h1>
-Ввод данных
+Лабораторная работа 9
 </h1>
-<h2 >
-<%= flash[:error] %>
+<h2 id="notice">
+
 </h2>
 <%= form_with url: "/task/show", class: "center", 
 id: "palindrom_form", 
@@ -12,5 +12,6 @@ method: :post do |form| %>
 <%= form.text_field :number, class: "text-field"%>
 <%= form.submit "Выолнить", class:"button" %>
 <% end %>
-<table border="2px" id = "resTable">
+<br>
+<table border="1px" id = "resTable">
 </table>

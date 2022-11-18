@@ -1,41 +1,48 @@
 
 var table = document.getElementById("resTable");
-for(var i = row;i>=0;i--){
-    table.deleteRow(i);
+if (typeof row !== "undefined"){
+    for(var i = row;i>=0;i--){
+        table.deleteRow(i);
+    }
 }
-    
-var row = 0;
-var tr = table.insertRow(row);
-for(let j=0; j<2; j++){
-    var td = tr.insertCell(j);
-    if (j==0)
-        td.appendChild(document.createTextNode('введенная последовательность'));
-    else
-        td.appendChild(document.createTextNode('<%= @number.join(' ') %>'));
-}
-row++;
+var error = document.getElementById("notice");
+<% if !flash[:notice].blank? %>
+    error.innerHTML ="<%= flash[:notice] %>";
+<%else%>
+    error.innerHTML ="";
+    row=0;
+    var tr = table.insertRow(row);
+    for(let j=0; j<2; j++){
+        var td = tr.insertCell(j);
+        if (j==0)
+            td.appendChild(document.createTextNode('введенная последовательность'));
+        else
+            td.appendChild(document.createTextNode('<%= @number.join(' ') %>'));
+    }
+    row++;
 
-<% @array.each do |x| %>
-  <% (2..x.size).each do |n| %>
-    <%x.each_cons(n) do |el|  %>
-        var tr = table.insertRow(row);
-        for(let j=0; j<2; j++){
-            var td = tr.insertCell(j);
-            if (j==0){
-                td.appendChild(document.createTextNode('подпоследовательность'));}
-            else{
-                td.appendChild(document.createTextNode('<%= el.join(' ') %>'));}
-        }
-        row++;
+    <% @array.each do |x| %>
+    <% (2..x.size).each do |n| %>
+        <%x.each_cons(n) do |el|  %>
+            var tr = table.insertRow(row);
+            for(let j=0; j<2; j++){
+                var td = tr.insertCell(j);
+                if (j==0){
+                    td.appendChild(document.createTextNode('подпоследовательность'));}
+                else{
+                    td.appendChild(document.createTextNode('<%= el.join(' ') %>'));}
+            }
+            row++;
+        <% end %>
     <% end %>
-  <% end %>
-<% end %>
+    <% end %>
 
-var tr = table.insertRow(row);
-for(let j=0; j<2; j++){
-    var td = tr.insertCell(j);
-    if (j==0)
-        td.appendChild(document.createTextNode('Максимальная подпоследовательность'));
-    else
-        td.appendChild(document.createTextNode('<%= !@s.length.zero?? @s[0...@s.length-2]:"Нет максимальной " %>'));
-}
+    var tr = table.insertRow(row);
+    for(let j=0; j<2; j++){
+        var td = tr.insertCell(j);
+        if (j==0)
+            td.appendChild(document.createTextNode('Максимальная подпоследовательность'));
+        else
+            td.appendChild(document.createTextNode('<%= !@s.length.zero?? @s[0...@s.length-2]:"Нет максимальной " %>'));
+    }
+<% end %>
