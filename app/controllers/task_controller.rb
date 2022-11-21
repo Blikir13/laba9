@@ -2,13 +2,12 @@
 
 # documentation
 class TaskController < ApplicationController
+  before_action :error, only: :show
   def input; end
 
   def show
-    error(params[:number])
     @number = params[:number].split(' ')
-    mas = @number.map(&:to_i)
-    @array = edit(mas)
+    @array = edit(@number.map(&:to_i))
     @s = max(@array)
   end
 
@@ -37,12 +36,12 @@ class TaskController < ApplicationController
   end
 
   # описание возможных ошибок
-  def error(str)
-    str.split(' ').each do |x|
+  def error
+    params[:number].split(' ').each do |x|
       next unless x.match(/^-?[0-9]\d*$/).nil?
 
-      flash[:notice] = 'Вы ввели не число'
+      return flash[:notice] = "Вы ввели не число: #{x}"
     end
-    flash[:notice] = 'Вы ввели меньше 10 чисел' if str.split(' ').size < 10
+    flash[:notice] = 'Вы ввели меньше 10 чисел' if params[:number].split(' ').size < 10
   end
 end
