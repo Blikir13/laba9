@@ -7,8 +7,8 @@
 local: false,
 method: :post do |form| %>
 <%= form.label :number, "Введите последовательность", class: "center" %>
-<%= form.text_field :number, class: "text-field"%>
-<%= form.submit "Выолнить", class:"button" %>
+<%= form.text_field :number, class: "text-field", value: "1 2 3 4 0 1 2 0 9 8 2"%>
+<%= form.submit "Выполнить", class:"button", id: 'calculate-btn' %>
 <% end %>
 <br>
 <table border="1px" id = "resTable">
